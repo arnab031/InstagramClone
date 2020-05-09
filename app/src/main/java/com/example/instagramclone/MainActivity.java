@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnGetAllData;
     private String allKickBoxer;
 
+    private Button btnTransition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSubmit.setOnClickListener(MainActivity.this);
 
         btnGetAllData=findViewById(R.id.btnGetAllData);
+        btnTransition=findViewById(R.id.btnNextActivity);
 
         txtGetData=findViewById(R.id.txtGetData);
         txtGetData.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 allKickBoxer="";
                 ParseQuery<ParseObject> queryAll=ParseQuery.getQuery("Kickboxer");
+
+                queryAll.whereGreaterThan("punch_power",100);
+                queryAll.setLimit(1);
                 queryAll.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
@@ -80,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
+            }
+        });
+
+        btnTransition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
